@@ -213,7 +213,6 @@ export const PedidoModel = {
                 throw new Error("Só é possível cancelar pedidos pendentes");
             };
             
-                //continuar - colocar os erros em conformidade com a questão
             //devolver ao estoque
             const{rows:itensPedido} = await client.query("SELECT produto_id, quantidade FROM itens_pedido WHERE pedido_id = $1", [id]);
             for(const item of itensPedido){
@@ -223,7 +222,9 @@ export const PedidoModel = {
             //mudar status para cancelado
             const queryStatus = "UPDATE pedidos SET status = $1 WHERE id = $2";
             const resultStatus = await client.query(queryStatus, ["Cancelado", id]);
-            //return (resultStatus.rowCount ?? 0) > 0;
+            if (resultStatus.rowCount === 0) {
+                throw new Error("Erro ao atualizar status do pedido");
+            }
             
             await client.query("COMMIT");
             return true;
@@ -235,36 +236,3 @@ export const PedidoModel = {
         }
     },    
 }
-
-/*
-Exercício 2: Cancelamento de Pedido com Estorno de Estoque
-Objetivo: Garantir a integridade dos dados através de Transações SQL em um fluxo de cancelamento.
-Enunciado:
-Implementar a funcionalidade de cancelamento de pedidos através do endpoint PATCH /api/pedidos/:id/cancelar. Ao cancelar um pedido, o sistema deve garantir que os produtos retornem ao estoque.
-Requisitos Técnicos:
-Validação de Estado: Um pedido só pode ser cancelado se o seu status atual for 'pendente'. Se for 'finalizado' ou já estiver 'cancelado', a API deve retornar erro 400.
-Uso de Transação (ACID): Toda a operação deve ocorrer dentro de um bloco BEGIN / COMMIT.
-Fluxo da Transação:
-Alterar o status do pedido para 'cancelado'.
-Recuperar todos os itens pertencentes a este pedido (ID do produto e quantidade).
-Para cada item, realizar o estorno no estoque: UPDATE produtos SET estoque = estoque + quantidade WHERE id = produto_id.
-Tratamento de Erro: Caso qualquer passo falhe, aplique o ROLLBACK.
-
-Exercício 3: Homologação (Testes)
-Objetivo: Validar a implementação através de chamadas HTTP.
-Enunciado:
-Crie um arquivo chamado exercicios.http na raiz do projeto contendo os seguintes testes:
-Uma chamada para o novo relatório financeiro.
-Uma chamada para cancelar um pedido existente.
-Uma chamada de tentativa de cancelamento de um pedido que não existe (deve retornar 404).
-Uma chamada de tentativa de cancelamento de um pedido que já está finalizado (deve retornar 400).
-
-Critérios de Avaliação:
-O código segue o padrão MVC estabelecido no projeto?
-As interfaces TypeScript foram atualizadas/criadas para os novos retornos?
-O SQL está protegido contra SQL Injection usando parâmetros ($1, $2)?
-As mensagens de erro são claras e ajudam o "cliente" da API a entender o que falhou?
-
-*/
-
-

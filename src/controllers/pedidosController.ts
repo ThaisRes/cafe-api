@@ -111,7 +111,7 @@ export const cancelarPedido = async (req: Request, res: Response) => {
             if (!sucesso) {
                 return res.status(404).json({ error: "Pedido não encontrado" });
             }
-            return res.status(204).send();
+            return res.status(200).json({message: "Pedido cancelado."});
     } catch (error) {    
         if(error instanceof Error) {
         return res.status(400).json({error: error.message})
