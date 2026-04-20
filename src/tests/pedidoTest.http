@@ -1,0 +1,81 @@
+GET http://localhost:3000/api/pedidos
+
+###
+
+POST http://localhost:3000/api/pedidos
+Content-Type: application/json
+
+{
+    "itens": [
+        {
+            "produto_id": 7,
+            "quantidade": 2
+        },
+        {
+            "produto_id": 1,
+            "quantidade": 1
+        },
+        {
+            "produto_id": 3,
+            "quantidade": 1
+        }
+    ]
+}
+
+###
+
+POST http://localhost:3000/api/pedidos
+Content-Type: application/json
+
+{
+    "itens": [
+        {
+            "produto_id": 2,
+            "quantidade": 5
+        },
+        {
+            "produto_id": 6,
+            "quantidade": 3
+        },
+        {
+            "produto_id": 3,
+            "quantidade": 2
+        }
+    ]
+}
+
+###
+
+DELETE http://localhost:3000/api/pedidos/3
+
+###
+
+PATCH http://localhost:3000/api/pedidos/4
+Content-Type: application/json
+
+{
+    "status": "finalizado"
+}
+
+###
+
+PUT http://localhost:3000/api/pedidos/6
+Content-Type: application/json
+
+{
+    "itens": [
+        {
+            "produto_id": 1,
+            "quantidade": 2
+        },
+        {
+            "produto_id": 2,
+            "quantidade": 1
+        },
+        {
+            "produto_id": 3,
+            "quantidade": 2
+        }
+    ]
+}
+

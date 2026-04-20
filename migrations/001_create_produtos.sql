@@ -1,0 +1,7 @@
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHA(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    estoque INTEGER DEFAULT 0
+)
+

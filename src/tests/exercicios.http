@@ -1,0 +1,5 @@
+GET http://localhost:3000/api/exercicios/relatorio
+
+###
+
+PATCH http://localhost:3000/api/exercicios/11/cancelar

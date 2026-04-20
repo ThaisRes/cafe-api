@@ -1,0 +1,40 @@
+GET http://localhost:3000/api/produtos
+
+###
+
+GET http://localhost:3000/api/produtos/2
+
+###
+
+POST http://localhost:3000/api/produtos
+Content-Type: application/json
+
+{
+    "nome": "Café coado",
+    "preco": "3.00",
+    "estoque": 20
+}
+
+###
+
+PATCH http://localhost:3000/api/produtos/6
+Content-Type: application/json
+
+{
+    "nome": "Café Hario V60"
+}
+
+###
+
+DELETE http://localhost:3000/api/produtos/5
+
+###
+
+POST http://localhost:3000/api/produtos
+Content-Type: application/json
+
+{
+    "nome": "Macchiato",
+    "preco": "18.00",
+    "estoque": 53
+}
